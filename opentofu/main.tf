@@ -56,7 +56,7 @@ resource "libvirt_volume" "web_vm_disk" {
 resource "libvirt_domain" "db_vm" {
   name   = var.db_vm_name
   memory = var.db_vm_memory
-  vcpu   = var.db_vm_vcpus # Number of CPUs
+  vcpu   = var.db_vm_vcpus 
 
   cloudinit = libvirt_cloudinit_disk.db_cloud_init.id
 
@@ -65,7 +65,7 @@ resource "libvirt_domain" "db_vm" {
   }
 
   network_interface {
-    network_name = "default" # Name of the Libvirt network
+    network_name = "custom-net" 
     wait_for_lease = true
   }
 
@@ -88,7 +88,7 @@ resource "libvirt_domain" "web_vm" {
   }
 
   network_interface {
-    network_name = "default" # Name of the Libvirt network
+    network_name = "custom-net" 
     wait_for_lease = true
   }
 

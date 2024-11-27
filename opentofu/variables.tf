@@ -3,7 +3,7 @@ variable "db_vm_name" {
 }
 
 variable "db_vm_memory" {
-  default = 1024
+  default = 5120
 }
 
 variable "db_vm_vcpus" {
@@ -15,7 +15,7 @@ variable "web_vm_name" {
 }
 
 variable "web_vm_memory" {
-  default = 1024
+  default = 2048
 }
 
 variable "web_vm_vcpus" {

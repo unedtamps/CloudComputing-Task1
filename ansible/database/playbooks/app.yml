@@ -1,0 +1,62 @@
+- hosts: "*"
+  become: yes
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+    - name: Install MySQL server
+      apt:
+        name: mysql-server
+        state: present
+    - name: Set MySQL root password
+      debconf:
+        name: "mysql-server"
+        question: "mysql-server/root_password"
+        value: "root"
+        vtype: "string"
+    - name: Confirm MySQL root password
+      debconf:
+        name: "mysql-server"
+        question: "mysql-server/root_password_again"
+        value: "root"
+        vtype: "string"
+    - name: Create MySQL user "unedo"
+      mysql_user:
+        name: unedo
+        password: root
+        priv: '*.*:ALL'
+        state: present
+        login_user: root
+        login_password: root
+    - name: Install PHP and required extensions
+      apt:
+        name:
+          - php
+          - php-mysql
+          - apache2
+          - libapache2-mod-php
+        state: present
+    - name: Install phpMyAdmin
+      debconf:
+        name: phpmyadmin
+        question: phpmyadmin/reconfigure-webserver
+        value: "apache2"
+        vtype: multiselect
+      when: ansible_distribution == "Ubuntu"
+    - name: Set phpMyAdmin MySQL app password
+      debconf:
+        name: phpmyadmin
+        question: phpmyadmin/mysql/app-pass
+        value: ""
+        vtype: password
+    - name: Confirm phpMyAdmin MySQL app password
+      debconf:
+        name: phpmyadmin
+        question: phpmyadmin/mysql/admin-pass
+        value: "root"
+        vtype: password
+    - name: Allow HTTP port 80 through UFW
+      ufw:
+        rule: allow
+        port: 80
+        proto: tcp

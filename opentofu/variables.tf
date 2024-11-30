@@ -1,23 +1,24 @@
 variable "db_vm_name" {
-  default = "db_vm0"
+  type = string
 }
 
 variable "db_vm_memory" {
-  default = 5120
+  type = number
 }
 
 variable "db_vm_vcpus" {
-  default = 1
+  type  = number
 }
 
 variable "web_vm_name" {
-  default = "web_vm0"
+  type =  string
 }
 
 variable "web_vm_memory" {
-  default = 2048
+  type =  number
 }
 
 variable "web_vm_vcpus" {
-  default = 1
+  type =  number
 }
+

@@ -63,12 +63,23 @@ This repository will create 2 VMs using qemu and libvirt and automated with open
     qemu-img convert -f <source_format> -O qcow2 <source_image> <output_image>
     ```
 
+    example:
+    ```bash
+     qemu-img convert -O qcow2 ubuntu-22.04-server-cloudimg-amd64.img base-image.qcow2
+    ```
+
+    resize:
+    ```bash
+     qemu-img resize image/base-image.qcow2 +5G 
+    ```
+
     Place the image in the `images` directory.
 
 
 ## Usage
 
    1. Edit the .vm-settings file to configure the VMs.
+
    2. Run `startup.sh` only once
    2. Run `up.sh` to create the VMs.
    3. Run `down.sh` to delete the VMs.
